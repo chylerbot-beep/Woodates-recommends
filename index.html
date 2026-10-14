@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Woodates Recommends</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: bright mid-century sample book. Geometric shapes in the header; each section owns one colour (mustard, orange, teal, olive, tomato) used on its marker, chip and "Our pick" label; cards stay white so the colour pops. Three card types: Compare, What you get, Rules of thumb. */
+:root{
+  color-scheme:light;
+  --paper:#fbf8f2; --surface:#ffffff; --ink:#22201c; --muted:#6a645a; --line:#e8e1d4;
+  --walnut:#6b4429;
+  --c-lighting:#e3a21a; --c-carpentry:#d9592a; --c-surfaces:#1d8a87; --c-walls:#7d8f2a; --c-common:#d8453f;
+  --pro:#2c7a5a; --con:#c2412f; --flag:#8a5d00; --flag-bg:#fff3cf; --flag-line:#e9b949;
+  --soft:#f6efe3;
+  --f-display:"Jost", "Futura", "Century Gothic", system-ui, sans-serif;
+  --f-body:"DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --r:14px;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+:focus-visible{outline:2px solid var(--c-carpentry);outline-offset:2px;border-radius:4px}
+
+.proto{background:var(--flag-bg);border-bottom:1px solid var(--flag-line);color:var(--flag);font-size:13px}
+.proto .wrap{padding-block:8px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between}
+.proto label{display:inline-flex;gap:6px;align-items:center;cursor:pointer;font-weight:600}
+
+header.top{position:relative;overflow:hidden}
+header.top .wrap{position:relative;padding-block:34px 26px}
+header.top .wrap > *{position:relative;z-index:1}
+.shapes{position:absolute;inset:0;pointer-events:none}
+.shapes i{position:absolute;display:block}
+.sh1{width:150px;height:150px;border-radius:50%;background:var(--c-lighting);right:-40px;top:-50px}
+.sh2{width:110px;height:55px;border-radius:110px 110px 0 0;background:var(--c-surfaces);right:70px;top:78px}
+.sh3{width:46px;height:46px;border-radius:50%;background:var(--c-carpentry);right:28px;top:118px}
+.sh4{width:70px;height:12px;border-radius:6px;background:var(--c-walls);right:150px;top:30px;transform:rotate(-18deg)}
+.brand{font-family:var(--f-display);font-weight:600;letter-spacing:.22em;font-size:12px;color:var(--walnut);text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:600;font-size:clamp(34px,8vw,52px);line-height:1;margin:8px 0 12px;letter-spacing:-.01em;text-wrap:balance;max-width:11ch}
+.lede{color:var(--muted);max-width:52ch;margin:0}
+.how{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.how span{font-size:13px;font-weight:600;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 11px;color:var(--muted)}
+@media (max-width:600px){
+  header.top .wrap{padding-block:40px 24px}
+  .sh1{width:96px;height:96px;right:-34px;top:-38px}
+  .sh2{width:62px;height:31px;border-radius:62px 62px 0 0;right:58px;top:30px}
+  .sh3{width:26px;height:26px;right:22px;top:56px}
+  .sh4{display:none}
+  .brand{max-width:calc(100% - 120px)}
+}
+
+.bar{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:color-mix(in srgb, var(--paper) 93%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{padding-block:10px;display:grid;gap:10px}
+.search{width:100%;height:44px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);padding:0 16px;font:inherit;font-size:15px}
+.search:focus{border-color:var(--c-surfaces);outline:none}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -2px;padding:0 2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-family:var(--f-display);font-size:14px;font-weight:600;color:var(--ink);border:2px solid var(--sec);background:var(--surface);padding:5px 13px 5px 9px;border-radius:999px;white-space:nowrap}
+.chip::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--sec)}
+.chip:hover{background:color-mix(in srgb, var(--sec) 14%, var(--surface))}
+
+main{padding-block:8px 32px}
+section.sec{padding-top:30px;scroll-margin-top:124px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.marker{width:30px;height:30px;flex:0 0 auto;border-radius:50%;background:var(--sec);position:relative}
+.marker::after{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:var(--paper);right:-3px;bottom:-3px;border:3px solid var(--sec)}
+h2{font-family:var(--f-display);font-weight:600;font-size:27px;margin:0;letter-spacing:-.01em}
+.sec-head .count{margin-left:auto;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.sec-intro{color:var(--muted);margin:0 0 14px;max-width:62ch;font-size:15px}
+.cards{display:grid;gap:12px}
+
+details.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;scroll-margin-top:124px}
+details.card[open]{border-color:var(--sec);box-shadow:0 0 0 1px var(--sec)}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;padding:14px 14px 13px}
+summary::-webkit-details-marker{display:none}
+.s-title{min-width:0;display:grid;gap:5px}
+h3{font-family:var(--f-display);font-weight:600;font-size:18px;line-height:1.25;margin:0;text-wrap:balance}
+.pick{font-size:15px;margin:0}
+.pick b{display:inline-block;background:var(--sec);color:#fff;font-weight:700;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-right:6px;vertical-align:1px}
+.decide{font-size:12.5px;color:var(--muted)}
+.decide em{font-style:normal;font-weight:700;color:var(--ink)}
+.chev{width:24px;height:24px;color:var(--muted);transition:transform .2s;margin-top:2px}
+details[open] .chev{transform:rotate(180deg);color:var(--sec)}
+.body{padding:2px 14px 16px;display:grid;gap:14px}
+.why{margin:0;max-width:62ch}
+h4{font-family:var(--f-display);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px;color:var(--muted);font-weight:600}
+
+/* compare */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.opt{border:1.5px solid var(--line);border-radius:12px;padding:12px;min-width:0;display:grid;gap:8px;align-content:start}
+.opt.is-pick{border-color:var(--sec);background:color-mix(in srgb, var(--sec) 7%, var(--surface))}
+.opt-name{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--f-display);font-weight:600;font-size:16px}
+.opt-name small{font-family:var(--f-body);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--sec);border-radius:999px;padding:2px 7px;white-space:nowrap}
+.opt dl{margin:0;display:grid;gap:6px;font-size:14.5px}
+.opt dt{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.opt dt.g{color:var(--pro)} .opt dt.w{color:var(--con)}
+.opt dd{margin:0}
+
+/* rules + standard lists */
+.ticks{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:15px}
+.ticks li{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:start}
+.ticks li::before{font-weight:700;line-height:1.5;text-align:center}
+.ticks li.do::before{content:"✓";color:var(--pro)}
+.ticks li.dont::before{content:"✕";color:var(--con)}
+.ticks li.std::before{content:"✓";color:var(--sec)}
+.upg{width:100%;border-collapse:collapse;font-size:14.5px}
+.upg td{padding:7px 0;border-top:1px dotted var(--line);vertical-align:top}
+.upg td:last-child{text-align:right;font-family:var(--f-mono);font-size:13px;padding-left:12px;white-space:nowrap}
+.kelvin{display:flex;gap:6px;flex-wrap:wrap}
+.kelvin span{font-family:var(--f-mono);font-size:12px;padding:6px 10px;border-radius:999px;color:#2a2418;border:1px solid rgba(0,0,0,.08)}
+
+.meta{display:grid;gap:10px;border-top:2px dotted var(--line);padding-top:12px}
+.meta p{margin:0;font-size:14.5px}
+.cost{font-family:var(--f-mono);font-size:13.5px;background:var(--soft);border-radius:10px;padding:9px 11px}
+.flag{border:1px dashed var(--flag-line);background:var(--flag-bg);color:var(--flag);border-radius:10px;padding:8px 10px;font-size:13.5px}
+.flag strong{font-weight:700}
+body:not(.review) .flag{display:none}
+
+a.term{color:inherit;text-decoration:underline dotted;text-decoration-color:var(--muted);text-underline-offset:3px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:0}
+.gloss div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;scroll-margin-top:124px;min-width:0}
+.gloss div:target{border-color:var(--c-common);box-shadow:0 0 0 1px var(--c-common)}
+.gloss dt{font-family:var(--f-display);font-weight:600}
+.gloss dd{margin:2px 0 0;font-size:14.5px;color:var(--muted)}
+.empty{color:var(--muted);padding:24px 0;text-align:center}
+footer{color:var(--muted);font-size:13px;padding-block:24px 40px;border-top:1px solid var(--line);margin-top:24px}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+</style>
+</head>
+<body>
+<div class="proto" role="note">
+  <div class="wrap">
+    <span><strong>Prototype for review.</strong> Drafted from our client calls. Amber notes mark what Queenie needs to confirm.</span>
+    <label for="reviewToggle"><input type="checkbox" id="reviewToggle" checked> Show review notes</label>
+  </div>
+</div>
+
+<header class="top">
+  <div class="shapes" aria-hidden="true"><i class="sh1"></i><i class="sh2"></i><i class="sh3"></i><i class="sh4"></i></div>
+  <div class="wrap">
+    <div class="brand">Woodates · For our clients</div>
+    <h1>Woodates Recommends</h1>
+    <p class="lede">Our go-to choices for lighting, carpentry and surfaces, and when to choose something else. Not sure? Start with our pick, then talk to your designer.</p>
+    <div class="how" aria-label="Card types"><span>Compare options</span><span>What you get</span><span>Rules of thumb</span></div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <input class="search" id="q" type="search" placeholder="Search, e.g. sintered, vinyl, curtains" aria-label="Search topics">
+    <nav class="chips" id="chips" aria-label="Sections"></nav>
+  </div>
+</div>
+
+<main class="wrap" id="main"></main>
+
+<div class="wrap">
+  <footer>Prices are typical figures from recent Woodates quotations and are a guide only. Your line-by-line quotation is the final reference.</footer>
+</div>
+
+<script>
+const SECTIONS = [
+  {id:"lighting", name:"Lighting", intro:"We draw your light and socket plan after your 3D design is confirmed, once we know where the sofa, bed, island and desk go."},
+  {id:"carpentry", name:"Carpentry", intro:"Made in our own factory and installed by our own team."},
+  {id:"surfaces", name:"Surfaces", intro:"Countertops, backsplash, flooring, grout and tiles."},
+  {id:"walls", name:"Walls & paint", intro:""},
+  {id:"common", name:"Common questions", intro:""}
+];
+
+const D = {before3d:"Before your 3D design", material:"At material selection", carpentry:"Before carpentry drawings", electrical:"Before electrical works", keys:"Before key collection"};
+
+const GLOSSARY = [
+  ["Kelvin","kelvin","How warm or white a light looks. Lower numbers (around 3000K) look warm; higher (6500K) look bright white."],
+  ["E0","e0","A low-emission grade of plywood: the board gives off very little formaldehyde."],
+  ["Screeding","screeding","Laying a cement layer to level a raw BTO floor before tiles or vinyl go on."],
+  ["Self-levelling","self-levelling","A thin liquid layer that sets perfectly flat. Vinyl needs it; tiles don't."],
+  ["L-box","l-box","A small boxed-in ceiling strip along one wall, usually to hide aircon pipes."],
+  ["Trunking","trunking","The casing that carries aircon pipes or wiring along walls and ceilings."],
+  ["Cove light","cove","Light hidden in a groove of a false ceiling, glowing onto the ceiling."],
+  ["Concealed LED","concealed-led","An LED strip set flush into the ceiling or carpentry, giving a clean line of light."],
+  ["LED driver","driver","The small power box an LED strip needs. Usually hidden in carpentry or the ceiling."],
+  ["Sintered stone","sintered","A very hard man-made stone slab. Handles heat and stains well."],
+  ["Quartz","quartz","A man-made stone made from crushed quartz and resin. Cheaper than sintered stone."],
+  ["Epoxy grout","epoxy","A resin-based grout that bonds tightly and resists stains."],
+  ["Marble gum","marble-gum","A filler applied over tile joints and polished, so the floor looks almost seamless."],
+  ["Casement","casement","A cabinet or wardrobe door that swings open on hinges."],
+  ["Laminate","laminate","The decorative surface sheet on carpentry. Comes in many colours and textures."]
+];
+const TERM_MATCH = [
+  [/\b(\d{4}K|Kelvin)\b/,"kelvin"],[/\bE0\b/,"e0"],[/\bscreed(ing)?\b/i,"screeding"],[/\bself-levell?ing\b/i,"self-levelling"],
+  [/\bL-box\b/,"l-box"],[/\btrunking\b/i,"trunking"],[/\bcove( light)?\b/i,"cove"],[/\bconcealed LED\b/i,"concealed-led"],
+  [/\bdrivers?\b/i,"driver"],[/\bsintered stone\b/i,"sintered"],[/\bquartz\b/i,"quartz"],[/\bepoxy\b/i,"epoxy"],
+  [/\bmarble gum\b/i,"marble-gum"],[/\bcasement\b/i,"casement"],[/\blaminates?\b/i,"laminate"]
+];
+
+const CARDS = [
+ // ───── LIGHTING
+ {s:"lighting", id:"colour-temperature", type:"rules", t:"Warm white or daylight?", decide:D.electrical,
+  pick:"3000K warm white to relax, 4000K to work.",
+  kelvin:true,
+  rules:[["do","3000K in the living room and bedrooms"],["do","4000K in the kitchen, study and toilets"],["do","Keep one colour within one open space"],["dont","6500K daylight across the whole home. It feels like an office"]],
+  tip:"Can't decide? Choose 3-colour switchable downlights and set them later.",
+  cost:"Same price for every colour. Switchable 3-colour fittings cost a little more.",
+  flag:"Lighting colour wasn't discussed in our transcripts. Is 3000K / 4000K our default? Do we suggest 3-colour downlights?"},
+ {s:"lighting", id:"light-types", type:"compare", t:"Downlights, cove, track or LED strip?", decide:D.electrical,
+  pick:"Downlights for everyday light, plus one feature light per main space.",
+  opts:[
+   {n:"Downlights", pick:true, g:"Even everyday light, easy to replace", w:"Too many in a grid looks like an office ceiling"},
+   {n:"Concealed LED", g:"A clean line of light with no dust-collecting groove", w:"Needs a false ceiling, L-box or carpentry to sit in"},
+   {n:"Cove light", g:"Soft, indirect glow across the ceiling", w:"Needs a false ceiling, and the groove collects dust"},
+   {n:"Track light", g:"Move or add heads later. Great over a dining table or island", w:"The power track has to be planned before the ceiling is done"}],
+  tip:"Concealed LED is popular now: the cove look without the groove.",
+  cost:"Electrician: about $50–60 per light point to supply and install. You buy the fittings, LED strips and drivers. We can share our suppliers.",
+  flag:"Confirm $50–60 per point and that LED drivers are always client-supplied."},
+ {s:"lighting", id:"false-ceiling", type:"rules", t:"Do I need a false ceiling?", decide:D.before3d,
+  pick:"Only where it does a job.",
+  rules:[["do","To hide aircon trunking"],["do","For cove or concealed LED lighting"],["do","When you need several lights in the middle of a room"],["dont","For just one or two lights"],["dont","Throughout a low-ceiling flat. It lowers the ceiling"]],
+  tip:"Hiding trunking along one wall? An L-box costs less than a full false ceiling.",
+  cost:"Quoted per room. A false ceiling with cove light costs more than a plain one.",
+  flag:"Add our prices for false ceiling and L-box."},
+ {s:"lighting", id:"carpentry-led", type:"rules", t:"LED strips in carpentry and corridors", decide:D.carpentry,
+  pick:"Plan LED strips while your carpentry is being drawn.",
+  rules:[["do","Wardrobes, display shelves, shoe cabinet and headboard"],["do","A low LED strip or small downlights for a dark corridor"],["dont","Adding strips after the carpentry is built. The wiring shows"],["dont","Very cheap strips. They can flicker or change colour"]],
+  tip:"Every strip needs a power point and a driver, so mark them on the light plan.",
+  cost:"LED channel in carpentry: $0. Electrical point: about $50–60. Strip and driver: you buy.",
+  flag:"Confirm the LED channel is free for all carpentry."},
+
+ // ───── CARPENTRY
+ {s:"carpentry", id:"carpentry-standard", type:"standard", t:"What comes standard in our carpentry", decide:D.carpentry,
+  pick:"E0 plywood and soft-close fittings, no top-up.",
+  std:["Solid E0 plywood with low-formaldehyde glue, across our whole factory","Marine plywood or waterproof board under sinks and basins","Soft-close hinges and drawer runners","Coloured interior PVC, not plain white","Laminate up to $58 a sheet, about 80% of colours in Singapore catalogues","3 drawers in every kitchen"],
+  upg:[["Extra kitchen drawer","~$80 each"],["Laminate above $58 a sheet","Pay the difference"],["Aluminium kitchen cabinets","~40% more"]],
+  tip:"Most formaldehyde in a new home comes from carpentry boards and glue, not paint. That's why we use E0 throughout.",
+  flag:"Confirm all board is E0, 3 included drawers, $80 per extra drawer and the 40% aluminium figure."},
+ {s:"carpentry", id:"laminate", type:"rules", t:"Choosing laminate colour and finish", decide:D.material,
+  pick:"A light base colour with one darker feature.",
+  rules:[["do","Choose from any Singapore laminate supplier"],["do","Matte or light texture on doors you touch often"],["do","Look at samples in daylight and under warm light"],["dont","High gloss on handle-less doors. It shows fingerprints"],["dont","All-dark walnut in a 4-room. It makes the flat feel smaller"]],
+  tip:"After you choose real samples, we re-render your 3D design with the actual laminate codes.",
+  cost:"Included up to $58 a sheet. Above that, you pay the difference.",
+  flag:"Confirm how the top-up is worked out for laminates above $58."},
+ {s:"carpentry", id:"where-to-choose", type:"standard", t:"Where to choose your materials", decide:D.material, listTitle:"Showrooms we work with",
+  pick:"Your designer books the appointments with you.",
+  std:["Laminate: Lamitak, EDL and other local suppliers","Tiles: Hafary","Sintered stone: Lian Hin, Aura Stone","Vinyl: Evorich, FloorXpert catalogues"],
+  tip:"Some showrooms need an appointment and close early on Saturdays. Check with your designer before going.",
+  flag:"Confirm our partner showroom list and which ones need appointments."},
+ {s:"carpentry", id:"wardrobe-doors", type:"compare", t:"Swing or sliding wardrobe doors?", decide:D.before3d,
+  pick:"Swing doors by default. Sliding when a door would hit the bed or desk.",
+  opts:[
+   {n:"Casement (swing)", pick:true, g:"Opens fully so you see everything. Matches other carpentry", w:"Needs clear space in front for the doors to open"},
+   {n:"Sliding", g:"No swing space needed. Good for small bedrooms", w:"Only half is open at a time. The track needs cleaning and doors can come off if forced"}],
+  tip:"Tell us your bed size early. We plan the wardrobe around it.",
+  cost:"Depends on width. Your designer can quote both.",
+  flag:"Confirm which is cheaper per foot, the clearance we recommend, and the anti-slip mechanism we offer for sliding doors."},
+ {s:"carpentry", id:"doors", type:"compare", t:"Standard or flush room doors?", decide:D.before3d,
+  pick:"Standard laminated doors. Flush doors only on a feature wall.",
+  why:"We make our own doors, so either type can match your carpentry in any laminate colour.",
+  opts:[
+   {n:"Standard laminated", pick:true, g:"Any laminate colour, sturdy, good value", w:"Door frame and handle are visible"},
+   {n:"Flush with magnetic handle", g:"Blends into a feature wall almost invisibly", w:"More than double the price. Needs precise alignment"}],
+  cost:"Standard: about $500 per door. Flush with magnetic handle: about $1,150 per door.",
+  flag:"Confirm both door prices."},
+
+ // ───── SURFACES
+ {s:"surfaces", id:"countertop", type:"compare", t:"Kitchen countertop: sintered stone or quartz?", decide:D.material,
+  pick:"Sintered stone if you cook often. Quartz to save.",
+  opts:[
+   {n:"Sintered stone", pick:true, g:"Handles heat and stains. Marble looks available", w:"Costs more. Thin edges can chip if knocked hard"},
+   {n:"Quartz", g:"Cheaper, many colours", w:"Light and creamy colours can stain from oil and turmeric"},
+   {n:"Compact surface", g:"Sleek look for a dry pantry", w:"Better for light use than heavy daily cooking"}],
+  tip:"Have young children? Ask for rounded edges.",
+  cost:"In a recent quote, a sintered stone countertop for one kitchen run was about $1,600. Quartz costs less.",
+  flag:"Add per-foot prices for sintered stone and quartz, and name the compact surface we offer."},
+ {s:"surfaces", id:"backsplash", type:"compare", t:"Kitchen backsplash", decide:D.material,
+  pick:"Match your countertop. Tempered glass to save.",
+  opts:[
+   {n:"Matching sintered stone", pick:true, g:"Seamless with the countertop. No grout lines", w:"Costs about as much again as the countertop"},
+   {n:"Tempered glass", g:"Cheaper, wipes clean, any colour", w:"Shows water marks and splashes more"},
+   {n:"Tiles", g:"Cheapest option", w:"Grout lines collect grease"}],
+  tip:"For a small yard counter, skip stone. Small orders carry minimum charges.",
+  cost:"Tempered glass: about $25/sqft, roughly $600–800 for a typical run. Matching sintered stone: about $1,650 in a recent quote.",
+  flag:"Confirm the glass rate and a typical sintered backsplash price."},
+ {s:"surfaces", id:"flooring", type:"compare", t:"Floor: tiles or vinyl?", decide:D.material,
+  pick:"Tiles for living and kitchen. Vinyl is optional in bedrooms.",
+  why:"A new BTO floor is raw cement. Both options need screeding first, and vinyl also needs self-levelling, so the cost ends up similar.",
+  opts:[
+   {n:"Tiles", pick:true, g:"Waterproof, hard-wearing, cool underfoot", w:"Grout lines to keep clean"},
+   {n:"Vinyl", g:"Warmer and quieter. Nice in bedrooms", w:"Scratches if heavy furniture is dragged. Not for wet areas"}],
+  tip:"Renovating a resale flat? Laying vinyl over the old tiles is cheaper and much less dusty.",
+  cost:"Tiles included up to about $3.50/sqft (600×600mm). On a raw BTO floor, vinyl costs about the same.",
+  flag:"Confirm the $3.50/sqft tile allowance."},
+ {s:"surfaces", id:"grout", type:"compare", t:"Tile grout", decide:D.material,
+  pick:"Epoxy grout if you mop often or hate yellow lines.",
+  opts:[
+   {n:"Cement grout", g:"Included, cheapest", w:"Can loosen within weeks if it doesn't cure well. Yellows over time"},
+   {n:"Epoxy grout", pick:true, g:"Bonds tightly, resists stains, easy to clean", w:"Costs more than cement grout"},
+   {n:"Marble gum + polish", g:"Joints almost disappear for a stone-like floor", w:"Done by our partner. Costs about the same as vinyl"}],
+  cost:"Epoxy is a top-up over cement grout. Marble gum and polish costs about the same as vinyl.",
+  flag:"Add our epoxy top-up price."},
+ {s:"surfaces", id:"kitkat-tiles", type:"rules", t:"Kit Kat tiles in the toilet?", decide:D.material,
+  pick:"Yes, on one feature wall.",
+  rules:[["do","Use them on the wall behind the basin or in the shower niche"],["do","Pair them with epoxy grout"],["dont","Covering the whole toilet. That's a lot of grout lines to scrub"]],
+  tip:"They lift a plain toilet without changing the layout.",
+  cost:"More labour than standard tiles because of the small pieces.",
+  flag:"Draft from general practice. Confirm our advice and the labour top-up."},
+
+ // ───── WALLS
+ {s:"walls", id:"feature-wall", type:"compare", t:"Partition wall or carpentry feature wall?", decide:D.before3d,
+  pick:"Partition to hide wiring. Carpentry when you want storage or texture.",
+  opts:[
+   {n:"Partition wall", pick:true, g:"Much cheaper. Painted to look like a normal wall", w:"No storage. Avoid running it down to the floor in wet areas"},
+   {n:"Carpentry feature wall", g:"Storage, fluted or textured finishes, hidden doors", w:"Costs a lot more"}],
+  tip:"Do carpentry on one feature wall and partition elsewhere to keep the budget in check.",
+  cost:"Partition is much cheaper than laminated carpentry. Ask your designer to quote both.",
+  flag:"Add a typical per-foot comparison."},
+ {s:"walls", id:"paint", type:"standard", t:"What paint we use", decide:D.material,
+  pick:"Nippon paint in up to 3 colours, with sealer first.",
+  std:["Nippon wall paint in up to 3 colours","Matex white for ceilings","Water-based sealer before painting, so paint grips and lasts"],
+  upg:[["More than 3 wall colours","Top-up"],["Anti-mould paint for toilet ceilings","Recommended, ask"]],
+  tip:"Low-odour paint smell clears in 2–3 days.",
+  flag:"Confirm the paint product name (Vinilex 5000?) and whether anti-mould for toilet ceilings is standard."},
+
+ // ───── COMMON
+ {s:"common", id:"shower-screen", type:"compare", t:"Shower screen", decide:D.material,
+  pick:"Framed sliding for the common toilet. Frameless for the master if budget allows.",
+  opts:[
+   {n:"Framed sliding", pick:true, g:"Lowest cost and sturdy. Silver or black frame", w:"Track needs regular cleaning"},
+   {n:"Frameless", g:"Clean, minimal look", w:"Costs more"},
+   {n:"Curved glass", g:"Soft look that suits curved designs", w:"Costs the most"}],
+  tip:"Check where the bomb shelter vent and toilet door are before choosing sliding or swing.",
+  cost:"Framed is cheapest. Frameless and curved add to the price.",
+  flag:"Add typical prices for each."},
+ {s:"common", id:"vanity", type:"rules", t:"Mirror cabinet and vanity", decide:D.carpentry,
+  pick:"A wall-to-wall mirror cabinet keeps the sink clear.",
+  rules:[["do","Use the mirror cabinet for daily skincare and toiletries"],["do","Bought your own? Send us the size and we'll build around it"],["do","Add a vanity cabinet under the basin for extra storage"],["dont","Assuming you can keep the basin with a new stone top. It usually has to change"]],
+  cost:"Vanity cabinet with stone top: around $800 per toilet in a recent quote.",
+  flag:"Confirm the vanity price and what we include."},
+ {s:"common", id:"pipes-trunking", type:"rules", t:"Exposed pipes and aircon trunking", decide:D.before3d,
+  pick:"Box them up, and plan the aircon route early.",
+  rules:[["do","Choose your aircon vendor early. Their trunking route affects the ceiling design"],["do","Box up exposed pipes, and leave access where they need servicing"],["do","Ask about adding an LED strip into the box-up"],["dont","Letting trunking cut across a feature wall"]],
+  tip:"See our Instagram for box-ups with built-in LED.",
+  cost:"Cheaper when done together with other ceiling or L-box work.",
+  flag:"Add a typical box-up price."},
+ {s:"common", id:"curtains", type:"rules", t:"Curtains", decide:D.before3d,
+  pick:"Plan where the curtain track hides before the ceiling is built.",
+  rules:[["do","Drop the ceiling slightly at the window, or add a pelmet, so the track is hidden"],["do","Day and night layers (sheer plus blackout) in bedrooms"],["dont","Measuring for curtains before carpentry and ceiling are done"]],
+  tip:"Curtains are made by a curtain specialist. Ask us for a recommendation.",
+  flag:"Confirm whether we coordinate curtains, and which vendor we recommend."},
+ {s:"common", id:"dishwasher", type:"rules", t:"Built-in or freestanding dishwasher?", decide:D.before3d,
+  pick:"Pick the model before your kitchen is drawn.",
+  rules:[["do","Built-in: sits under the counter behind a matching carpentry door"],["do","Send us the model and size before your 3D design is final"],["dont","Buying a freestanding one later. It may need a higher counter or an open slot"]],
+  cost:"Carpentry door for a built-in dishwasher is quoted separately.",
+  flag:"Confirm our standard counter height and how we fit freestanding dishwashers."},
+ {s:"common", id:"own-items", type:"rules", t:"Items you buy yourself (Taobao, JB, IKEA)", decide:D.carpentry,
+  pick:"Tell us early so we plan around them.",
+  rules:[["do","Send photos and sizes of what you've bought or plan to buy"],["do","Ask about installation fees before buying large items"],["do","Items bought in JB can be delivered to our factory and brought over with your carpentry"],["dont","Buying lights before your light plan is final"]],
+  flag:"Confirm the installation fee policy for own items and the JB delivery arrangement."},
+ {s:"common", id:"rounded-corners", type:"rules", t:"Rounded corners for young children", decide:D.carpentry,
+  pick:"Yes, on anything at a child's head height.",
+  rules:[["do","Round the island, dining-side counter and low cabinets"],["do","Ask for rounded edges on stone countertops too"]],
+  cost:"Quoted per corner or edge.",
+  flag:"Add our rounded corner price."}
+];
+
+const KELVIN = [["2700K","#ffd9a3"],["3000K","#ffe4ba"],["4000K","#fff3e3"],["6500K","#eaf1ff"]];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const GLOSS = Object.fromEntries(GLOSSARY.map(g=>[g[1],g]));
+const chev = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+// link the first mention of each glossary term within a card
+function linker(){
+  const used = new Set();
+  return text => {
+    let out = esc(text);
+    for (const [re,key] of TERM_MATCH){
+      if (used.has(key)) continue;
+      const m = out.match(re);
+      if (m && !/<[^>]*$/.test(out.slice(0,m.index))){
+        used.add(key);
+        out = out.slice(0,m.index) + `<a class="term" href="#g-${key}" title="${esc(GLOSS[key][2])}">${m[0]}</a>` + out.slice(m.index+m[0].length);
+      }
+    }
+    return out;
+  };
+}
+
+function bodyHTML(c, L){
+  let h = c.why ? `<p class="why">${L(c.why)}</p>` : '';
+  if (c.kelvin) h += `<div class="kelvin" aria-label="Colour temperature examples">${KELVIN.map(([k,col])=>`<span style="background:${col}">${k}</span>`).join('')}</div>`;
+  if (c.type==="compare"){
+    h += `<div class="opts">${c.opts.map(o=>`<div class="opt${o.pick?' is-pick':''}">
+      <div class="opt-name"><span>${L(o.n)}</span>${o.pick?'<small>Our pick</small>':''}</div>
+      <dl><dt class="g">Good for</dt><dd>${L(o.g)}</dd><dt class="w">Watch out</dt><dd>${L(o.w)}</dd></dl></div>`).join('')}</div>`;
+  } else if (c.type==="rules"){
+    h += `<div><h4>Rules of thumb</h4><ul class="ticks">${c.rules.map(([k,t])=>`<li class="${k}"><span>${k==='dont'?'<span class="sr" hidden>Avoid: </span>':''}${L(t)}</span></li>`).join('')}</ul></div>`;
+  } else if (c.type==="standard"){
+    h += `<div><h4>${esc(c.listTitle||'Included as standard')}</h4><ul class="ticks">${c.std.map(t=>`<li class="std"><span>${L(t)}</span></li>`).join('')}</ul></div>`;
+    if (c.upg) h += `<div><h4>Upgrades</h4><table class="upg"><tbody>${c.upg.map(([a,b])=>`<tr><td>${L(a)}</td><td>${esc(b)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  const meta = [];
+  if (c.tip) meta.push(`<div><h4>Tip from our team</h4><p>${L(c.tip)}</p></div>`);
+  if (c.cost) meta.push(`<div><h4>What it costs</h4><p class="cost">${esc(c.cost)}</p></div>`);
+  if (c.flag) meta.push(`<div class="flag"><strong>To confirm:</strong> ${esc(c.flag)}</div>`);
+  if (meta.length) h += `<div class="meta">${meta.join('')}</div>`;
+  return h;
+}
+
+function searchText(c){
+  const parts = [c.t,c.pick,c.why||'',c.tip||'',c.cost||''];
+  (c.opts||[]).forEach(o=>parts.push(o.n,o.g,o.w));
+  (c.rules||[]).forEach(r=>parts.push(r[1]));
+  (c.std||[]).forEach(s=>parts.push(s));
+  return parts.join(' ').toLowerCase();
+}
+
+function cardHTML(c){
+  const L = linker();
+  return `<details class="card" id="${c.id}" data-text="${esc(searchText(c))}">
+    <summary>
+      <div class="s-title">
+        <h3>${esc(c.t)}</h3>
+        <p class="pick"><b>${c.type==='standard'?'In short':'Our pick'}</b>${esc(c.pick)}</p>
+        <div class="decide">Decide: <em>${esc(c.decide)}</em></div>
+      </div>
+      ${chev}
+    </summary>
+    <div class="body">${bodyHTML(c, L)}</div>
+  </details>`;
+}
+
+function render(){
+  const main = document.getElementById('main');
+  main.innerHTML = SECTIONS.map(s=>{
+    const cs = CARDS.filter(c=>c.s===s.id);
+    return `<section class="sec" id="${s.id}" style="--sec:var(--c-${s.id})" aria-labelledby="h-${s.id}">
+      <div class="sec-head"><span class="marker" aria-hidden="true"></span><h2 id="h-${s.id}">${s.name}</h2><span class="count">${cs.length} topics</span></div>
+      ${s.intro ? `<p class="sec-intro">${esc(s.intro)}</p>` : ''}
+      <div class="cards">${cs.map(cardHTML).join('')}</div>
+    </section>`;
+  }).join('')
+  + '<p class="empty" id="empty" hidden>No topics match. Try another word, or ask your designer.</p>'
+  + `<section class="sec" id="glossary" style="--sec:var(--c-common)" aria-labelledby="h-glossary">
+      <div class="sec-head"><span class="marker" aria-hidden="true"></span><h2 id="h-glossary">Words we use</h2></div>
+      <p class="sec-intro">Tap an underlined word on any card to jump here.</p>
+      <dl class="gloss">${GLOSSARY.map(([w,id,d])=>`<div id="g-${id}"><dt>${esc(w)}</dt><dd>${esc(d)}</dd></div>`).join('')}</dl>
+    </section>`;
+  document.getElementById('chips').innerHTML = SECTIONS.concat([{id:"glossary",name:"Words we use"}]).map(s=>`<a class="chip" style="--sec:var(--c-${s.id==='glossary'?'common':s.id})" href="#${s.id}">${s.name}</a>`).join('');
+}
+render();
+
+// search
+document.getElementById('q').addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  let any = false;
+  document.querySelectorAll('section.sec').forEach(sec=>{
+    if (sec.id==='glossary'){ sec.hidden = !!q; return; }
+    let shown = 0;
+    sec.querySelectorAll('details.card').forEach(d=>{
+      const hit = !q || d.dataset.text.includes(q);
+      d.hidden = !hit; if (hit) shown++;
+      if (q && hit) d.open = true;
+    });
+    sec.hidden = shown===0; if (shown) any = true;
+  });
+  document.getElementById('empty').hidden = any;
+});
+
+// review notes toggle
+const tog = document.getElementById('reviewToggle');
+function setReview(on){ document.body.classList.toggle('review', on); try{ localStorage.setItem('wr-review', on?'1':'0'); }catch(e){} }
+let saved = null; try{ saved = localStorage.getItem('wr-review'); }catch(e){}
+tog.checked = saved===null ? true : saved==='1';
+setReview(tog.checked);
+tog.addEventListener('change', ()=>setReview(tog.checked));
+
+// open a topic from a #link
+function openHash(){
+  const id = location.hash.slice(1); if(!id) return;
+  const el = document.getElementById(id);
+  if (el && el.tagName==='DETAILS'){ el.open = true; el.scrollIntoView({block:'start'}); }
+}
+openHash(); window.addEventListener('hashchange', openHash);
+</script>
+</body>
+</html>
